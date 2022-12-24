@@ -1,0 +1,690 @@
+<html>
+	<head>
+		<!-- CSS only -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+		<script type="text/javascript" src="./sssa-fixed.js"></script>
+		<script type="text/javascript" src="./qrcode.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+		<script src="https://unpkg.com/html5-qrcode"></script>
+	</head>
+<body>
+
+	<style>
+	.container
+	{
+		margin-top: 80px;
+		padding: 40px 80px;
+		border-radius: 10px;
+		background-color: #EEE;
+	}
+
+	.form-group
+	{
+		min-height: 80px;
+		padding-bottom: 10px;
+	}
+
+	.message
+	{
+		color: red;
+		height: 30px;
+	}
+
+	.form-button
+	{
+		margin-top: 10px;
+	}
+
+	</style>
+
+	<div class="container">
+		<div id="menu" style="display: none">
+			<div class="form-group">
+				<button id="menu-login" class="btn btn-primary form-button">Login</button>
+			</div>
+			<div class="form-group">
+				<button id="menu-setup" class="btn btn-primary form-button">Setup</button>
+			</div>
+			<div class="form-group">
+				<button id="menu-recovery" class="btn btn-primary form-button">Recovery</button>		
+			</div>
+		</div>
+	
+		<div id="accountdata" style="display: none">
+			<div class="form-group">
+				<h1>Enter your wallet details</h1>
+			</div>
+
+			<div class="form-group">
+				<label for="accountdata-wallettype">Wallet type</label>
+				<select id="accountdata-wallettype" class="form-control">
+					<option value=''>Select a wallet type</option>
+					<option>Bitcoin</option>
+					<option>Ethereum</option>
+					<option>Monero</option>
+					<option>Holo</option>
+				</select>  			
+			</div>
+			<div class="form-group">
+				<label for="accountdata-privatekey">Private key</label>
+				<input id="accountdata-privatekey" class="form-control" type="text" placeholder="Private key" />
+			</div>
+			<div class="form-group">
+				<label for="accountdata-password">Password</label>
+				<input id="accountdata-password" class="form-control" type="password" />
+			</div>
+			<div class="form-group">
+				<label for="accountdata-password-re">Password (verification)</label>
+				<input id="accountdata-password-re" class="form-control" type="password" />
+			</div>
+			<div id="accountdata-message" class="message">
+			</div>
+			<button id="accountdata-cancel" class="btn btn-primary form-button">Cancel</button>
+			<button id="accountdata-submit" class="btn btn-primary form-button">Next</button>
+		</div>
+		<div id="accountdetails" style="display: none">
+			<div class="form-group">
+				<h1>2FA Login information</h1>
+			</div>
+			<div class="form-group">
+				<label for="accountdetails-backupkey">Backup key</label>
+				<input id="accountdetails-backupkey" class="form-control" type="text" placeholder="Private key" readonly />
+				<small class="form-text text-muted">Store your backup key safely. It is needed for recovery if you lose your QR code or your password.</small>
+			</div>
+			<div class="form-group">
+				<label for="accountdetails-passwordkey">Password protected key</label>
+				<input id="accountdetails-passwordkey" class="form-control" type="text" placeholder="Password protected key" readonly />
+				<small class="form-text text-muted">Store your password protected key as a file somewhere so that you can still use it if you lose this device.</small>
+			</div>
+			<div class="form-group">			
+				<label>QR code</label>
+				<div id="accountdetails-qrcode"></div>
+				<small class="form-text text-muted">Save and print this QR code or and keep it with you. You need it to login.</small>
+			</div>
+			<button id="accountdetails-submit" class="btn btn-primary form-button">Next</button>
+		</div>
+		<div id="verifysetup" style="display: none">
+			<div class="form-group">
+				<h1>Enter your keys for verification</h1>
+			</div>
+			<div id="verifysetup-qrcode-wrapper" class="form-group">
+				<label>QR code</label>
+				<div id="verifysetup-qr-reader" style="width:500px"></div>
+				<div id="verifysetup-qr-reader-results"></div>
+			</div>		
+			<div id="verifysetup-backupkey-wrapper" class="form-group">
+				<label for="verifysetup-backupkey">Backup key</label>
+				<input id="verifysetup-backupkey" class="form-control" type="text" />
+			</div>			
+			<div id="verifysetup-passwordkey-wrapper" class="form-group">
+				<label for="verifysetup-passwordkey">Password key</label>
+				<input id="verifysetup-passwordkey" class="form-control" type="text" />
+			</div>			
+			<div id="verifysetup-password-wrapper" class="form-group">
+				<label for="verifysetup-password">Password</label>
+				<input id="verifysetup-password" class="form-control" type="password" />
+			</div>			
+			<div id="verifysetup-message" class="message">
+			</div>
+			<button id="verifysetup-cancel" class="btn btn-primary form-button">Cancel</button>
+			<button id="verifysetup-submit" class="btn btn-primary form-button">Next</button>			
+		</div>
+
+		
+		<div id="login" style="display: none">
+			<div class="form-group">
+				<h1>Login with QR code and password</h1>
+			</div>
+			<div class="form-group">
+				<label>QR code</label>
+				<div id="login-qr-reader" style="width:500px"></div>
+				<div id="login-qr-reader-results"></div>
+			</div>
+			<div class="form-group">
+				<label for="login-password">Password</label>
+				<input id="login-password" class="form-control" type="password" />
+			</div>			
+			<div id="login-message" class="message">
+			</div>
+			<button id="login-cancel" class="btn btn-primary form-button">Cancel</button>					
+			<button id="login-submit" class="btn btn-primary form-button">Next</button>			
+		</div>
+		
+		
+		
+		<div id="alternatelogin" style="display: none">
+			<div class="form-group">
+				<h1>Choose how you want to authenticate yourself</h1>
+			</div>
+			<div class="form-group">
+				<label for="alternatelogin-method1">Method 1</label>
+				<select id="alternatelogin-method1" class="form-control">
+					<option value="qrcode" selected>QR code</option>
+					<option value="backupkey">Backup key</option>
+					<option value="password">Password</option>
+					<option value="passwordkey">Password key and password</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="alternatelogin-method2">Method 2</label>
+				<select id="alternatelogin-method2" class="form-control">
+					<option value="qrcode">QR code</option>
+					<option value="backupkey" selected>Backup key</option>
+					<option value="password">Password</option>
+					<option value="passwordkey">Password key and password</option>
+				</select>
+			</div>			
+			<div id="alternatelogin-qrcode-wrapper" class="form-group">
+				<label>QR code</label>
+				<div id="alternatelogin-qr-reader" style="width:500px"></div>
+				<div id="alternatelogin-qr-reader-results"></div>
+			</div>		
+			<div id="alternatelogin-backupkey-wrapper" class="form-group">
+				<label for="alternatelogin-backupkey">Backup key</label>
+				<input id="alternatelogin-backupkey" class="form-control" type="text" />
+			</div>			
+			<div id="alternatelogin-passwordkey-wrapper" class="form-group">
+				<label for="alternatelogin-passwordkey">Password key</label>
+				<input id="alternatelogin-passwordkey" class="form-control" type="text" />
+			</div>			
+			<div id="alternatelogin-password-wrapper" class="form-group">
+				<label for="alternatelogin-password">Password</label>
+				<input id="alternatelogin-password" class="form-control" type="password" />
+			</div>			
+			<div id="alternatelogin-message" class="message">
+			</div>
+			<button id="alternatelogin-cancel" class="btn btn-primary form-button">Cancel</button>		
+			<button id="alternatelogin-submit" class="btn btn-primary form-button">Next</button>			
+		</div>
+		
+		
+		<!-- <div id="resetqr" style="display: none"> -->
+			<!-- <div class="form-group"> -->
+				<!-- <h1>Provide backup key and password</h1> -->
+			<!-- </div>	 -->
+			<!-- <div class="form-group"> -->
+				<!-- <label for="resetqr-backupkey">Backup key</label> -->
+				<!-- <input id="resetqr-backupkey" class="form-control" type="text" /> -->
+			<!-- </div>			 -->
+			<!-- <div class="form-group"> -->
+				<!-- <label for="resetqr-password">Password</label> -->
+				<!-- <input id="resetqr-password" class="form-control" type="password" /> -->
+			<!-- </div>			 -->
+			<!-- <div id="resetqr-message" class="message"> -->
+			<!-- </div> -->
+			<!-- <button id="resetqr-submit" class="btn btn-primary form-button">Next</button>			 -->
+		<!-- </div> -->
+		<!-- <div id="resetpassword" style="display: none"> -->
+			<!-- <div class="form-group"> -->
+				<!-- <h1>Provide backup key and QR code</h1> -->
+			<!-- </div>	 -->
+			<!-- <div class="form-group"> -->
+				<!-- <label for="resetpassword-backupkey">Backup key</label> -->
+				<!-- <input id="resetpassword-backupkey" class="form-control" type="text" /> -->
+			<!-- </div>			 -->
+			<!-- <div class="form-group"> -->
+				<!-- <div id="resetpassword-qr-reader" style="width:500px"></div> -->
+				<!-- <div id="resetpassword-qr-reader-results"></div> -->
+			<!-- </div> -->
+			<!-- <div id="resetpassword-message" class="message"> -->
+			<!-- </div> -->
+			<!-- <button id="resetpassword-submit" class="btn btn-primary form-button">Next</button>			 -->
+		<!-- </div> -->
+		<!-- <div id="resetpassword" style="display: none"> -->
+			<!-- <div class="form-group"> -->
+				<!-- <label for="resetpassword-backupkey">Backup key</label> -->
+				<!-- <input id="resetpassword-backupkey" class="form-control" type="text" /> -->
+			<!-- </div>			 -->
+			<!-- <div class="form-group"> -->
+				<!-- <div id="resetpassword-qr-reader" style="width:500px"></div> -->
+				<!-- <div id="resetpassword-qr-reader-results"></div> -->
+			<!-- </div> -->
+			<!-- <div id="resetpassword-message" class="message"> -->
+			<!-- </div> -->
+			<!-- <button id="resetpassword-submit" class="btn btn-primary form-button">Next</button>			 -->
+		<!-- </div> -->
+	</div>
+
+
+	<!--
+
+	Setup:
+	- enter account data
+	* split key in 3 encrypted parts
+	- show the partial keys
+	* encrypt the stored key with the password
+	- show the qr code
+	O Run activation step
+
+	Activation:
+	- scan qr code
+	- enter password
+	* decrypt the stored key
+	* recreate the privete key from the stored key and qr code
+	* open the wallet
+
+	Recovery:
+	- choose recovery methods
+	- enter data
+	* recreate the private key from the supplied data
+	O Run setup
+
+	-->
+
+	<script>
+
+	/* Generic functions */
+
+	function _(id) {
+		return document.getElementById(id);
+	}
+
+	function set(id, innerHTML) {
+		_(id).innerHTML = innerHTML;
+	}
+
+	function hide(id) {
+		_(id).style.display = "none";
+	}
+
+	function show(id) {
+		_(id).style.display = "block";
+	}
+
+	function getValue(id) {
+		return _(id).value;
+	}
+
+	function setValue(id, value) {
+		_(id).value = value;
+	}
+
+	function click(id, func, data) {
+		_(id).addEventListener('click', func, data);
+	}
+
+	async function retry(asyncFn, conditionFn, error) {
+		var tryAgainMessage = '. Do you want to try again?';
+		var result = await asyncFn();
+		while(!conditionFn(result))
+		{
+			if(!confirm(error + tryAgainMessage)) 
+				throw error;
+			result = await asyncFn();
+		}
+		return result;
+	}
+
+	function renderQrCode(elem, qrCode) {
+		_(elem).innerHTML = '';
+		new QRCode(_(elem), qrCode);	
+	}
+
+	var html5QrcodeScanner;
+	function configureQrReader(idQr, idResults, fn) {
+		var resultContainer = _(idResults);
+		var qrKey;
+
+		function onScanSuccess(decodedText, decodedResult) {
+			if (decodedText !== qrKey) {
+				qrKey = decodedText;
+				fn(decodedText);				
+			}
+		}
+		
+		if(html5QrcodeScanner != null) {
+			html5QrcodeScanner.clear();
+		}
+
+		html5QrcodeScanner = new Html5QrcodeScanner(
+			idQr, { fps: 10, qrbox: 250 });
+		html5QrcodeScanner.render(onScanSuccess);
+	}
+	
+	/* Forms */
+	
+	/* Setup */
+
+	function validateSetupForm(walletType, privateKey, password, passwordRe) {
+		if(walletType === '') throw 'Select a wallet type';
+		if(privateKey === '') throw 'Enter a private key';
+		if(password === '') throw 'Enter a password';
+		if(passwordRe === '') throw 'Repeat the password';
+		if(passwordRe != password) throw 'Passwords do not match';
+	}
+
+	function processSetupData(data) {
+		// split key in 3 encrypted parts
+		var keys = sssa.create(2, 3, data.privateKey);
+		var backupKey = keys[0];
+		var qrKey = keys[1];
+		var passwordKey = keys[2];
+	
+		// todo display a screen with the three keys?
+	
+		// encrypt the stored key with the password
+		var encryptedPasswordKey = CryptoJS.AES.encrypt(passwordKey, data.password);
+		localStorage.setItem('passwordKey', encryptedPasswordKey);	
+		
+		return {
+			backupKey: backupKey,
+			qrKey: qrKey,
+			encryptedPasswordKey: encryptedPasswordKey
+		};
+	}
+	
+	async function handleSetupForm() {
+		var promise = new Promise((resolve, reject) => {
+			var cancelAction = function(e) {
+				hide('accountdata');
+				resolve({ 
+					success: false
+				});				
+			};
+			var submitAction = function(e) {
+				set('accountdata-message', '');
+				hide('accountdata');
+				
+				try {
+
+					var walletType = getValue('accountdata-wallettype');
+					var privateKey = getValue('accountdata-privatekey');
+					var password = getValue('accountdata-password');
+					var passwordRe = getValue('accountdata-password-re');
+
+					validateSetupForm(walletType, privateKey, password, passwordRe);
+								
+					resolve({ 
+						success: true,
+						privateKey: privateKey, 
+						walletType: walletType, 
+						password: password 
+					});
+				}
+				catch(e) {
+					set('accountdata-message', e);
+					click('accountdata-submit', submitAction, {once: true});
+					show('accountdata');												
+				}				
+			};
+
+			click('accountdata-submit', submitAction, {once: true});
+			click('accountdata-cancel', cancelAction, {once: true});
+		});
+		show('accountdata');
+		return promise;
+	}
+
+	async function handleLoginDetailsForm(backupKey, encryptedPasswordKey, qrKey) {
+		var promise = new Promise((resolve, reject) => {
+			var submitAction = function(e) {
+				hide('accountdetails');
+				resolve({});
+			};
+			click('accountdetails-submit', submitAction, {once: true});
+		});
+		renderQrCode('accountdetails-qrcode', qrKey);
+		setValue('accountdetails-backupkey', backupKey);
+		setValue('accountdetails-passwordkey', encryptedPasswordKey);
+		show('accountdetails');
+		return promise;
+	}
+	
+	async function handleSetupVerification() {
+		var promise = new Promise((resolve, reject) => {	
+			var cancelAction = function(e) {
+				hide('verifysetup');
+				resolve({ 
+					success: false
+				});				
+			};
+			var submitAction = function(e) {
+				set('verifysetup-message', '');
+				hide('verifysetup');
+				
+				try {				
+					var password = getValue('verifysetup-password');
+					var encryptedPasswordKey = getValue('verifysetup-passwordkey');
+					var passwordKey = CryptoJS.AES.decrypt(encryptedPasswordKey, password).toString(CryptoJS.enc.Utf8);						
+					var backupKey = getValue('verifysetup-backupkey');
+					
+					var privateKey = sssa.combine([qrKey, passwordKey]);
+					var success = privateKey == sssa.combine([qrKey, backupKey]) && privateKey == sssa.combine([passwordKey, backupKey]);
+					
+					resolve({ 
+						success: success,
+						privateKey: privateKey
+					});
+				}
+				catch(e) {
+					set('verifysetup-message', e);
+					click('verifysetup-submit', submitAction, {once: true});
+					show('verifysetup');												
+				}				
+				
+			};
+			click('verifysetup-cancel', cancelAction, {once: true});
+			click('verifysetup-submit', submitAction, {once: true});
+		});
+	
+		var qrKey;
+		configureQrReader('verifysetup-qr-reader', 'verifysetup-qr-reader-results', function(qr) { qrKey = qr; });		
+		
+		show('verifysetup');
+		return promise;
+	}	
+	
+	/* Login */
+	
+	async function handleLoginForm() {
+		var promise = new Promise((resolve, reject) => {
+			var cancelAction = function(e) {
+				hide('login');
+				resolve({ 
+					success: false
+				});				
+			};
+			var submitAction = function(e) {
+				set('login-message', '');
+				hide('login');
+				
+				try {
+					var password = getValue('login-password');
+					var encryptedPasswordKey = localStorage.getItem('passwordKey');			
+					
+					var passwordKey = CryptoJS.AES.decrypt(encryptedPasswordKey, password).toString(CryptoJS.enc.Utf8);
+					
+					var privateKey = sssa.combine([qrKey, passwordKey]);
+							
+					resolve({ 
+						privateKey: privateKey
+					});
+				}
+				catch(e) {
+					set('login-message', e);
+					click('login-submit', submitAction, {once: true});
+					show('login');												
+				}				
+				
+			};
+			click('login-submit', submitAction, {once: true});
+			click('login-cancel', cancelAction, {once: true});
+			
+		});
+	
+		var qrKey;
+		configureQrReader('login-qr-reader', 'login-qr-reader-results', function(qr) { qrKey = qr; });		
+
+		show('login');
+		return promise;
+	}
+	
+	/* Recovery */
+	
+	async function handleAlternateLoginForm() {
+		var promise = new Promise((resolve, reject) => {	
+			var cancelAction = function(e) {
+				hide('alternatelogin');
+				resolve({ 
+					success: false
+				});				
+			};
+			var submitAction = function(e) {
+				set('alternatelogin-message', '');
+				hide('alternatelogin');
+				
+				try {				
+					var methods = [getValue('alternatelogin-method1'), getValue('alternatelogin-method2')];
+					var keys = [];
+					if(methods.includes('qrcode')) {
+						keys.push(qrKey);
+					}
+					if(methods.includes('password')) {
+						var password = getValue('alternatelogin-password');
+						var encryptedPasswordKey = localStorage.getItem('passwordKey');									
+						var passwordKey = CryptoJS.AES.decrypt(encryptedPasswordKey, password).toString(CryptoJS.enc.Utf8);						
+						keys.push(passwordKey);
+					}
+					if(methods.includes('passwordkey')) {
+						var password = getValue('alternatelogin-password');
+						var encryptedPasswordKey = getValue('alternatelogin-passwordkey');
+						var passwordKey = CryptoJS.AES.decrypt(encryptedPasswordKey, password).toString(CryptoJS.enc.Utf8);						
+						keys.push(passwordKey);
+					}
+					if(methods.includes('backupkey')) {
+						var backupKey = getValue('alternatelogin-backupkey');
+						keys.push(backupKey);
+					}
+					var privateKey = sssa.combine(keys);
+							
+					resolve({ 
+						privateKey: privateKey
+					});
+				}
+				catch(e) {
+					set('alternatelogin-message', e);
+					click('alternatelogin-submit', submitAction, {once: true});
+					show('alternatelogin');												
+				}				
+				
+			};
+			click('alternatelogin-cancel', cancelAction, {once: true});			
+			click('alternatelogin-submit', submitAction, {once: true});
+		});
+		
+		var qrKey;
+		configureQrReader('alternatelogin-qr-reader', 'alternatelogin-qr-reader-results', function(qr) { qrKey = qr; });		
+		
+		show('alternatelogin');
+		return promise;
+	}
+
+	/* Workflows */	
+	
+	async function setup() {
+		var promise = new Promise(async (resolve, reject) => {
+			// enter account data
+			var data = await handleSetupForm();
+			if(data.success == false) resolve({success: false});
+			
+			var loginDetails = processSetupData(data);
+
+			// show the form with the backup key, password key and the qr code
+			await handleLoginDetailsForm(loginDetails.backupKey, loginDetails.encryptedPasswordKey, loginDetails.qrKey);
+			if(data.success == false) resolve({success: false});
+
+			// let the user verify that they can use all the combinations
+			try {
+				var verifyResults = await retry(async () => await handleSetupVerification(), result => result.privateKey == data.privateKey, 'Verification failed');
+			}
+			catch(e) {
+				resolve({success: false});
+			}			
+
+			resolve({success: verifyResults.successs});
+		});	
+		return promise;
+	}
+
+	async function activation() {
+		var promise = new Promise(async (resolve, reject) => {
+			var result = await handleLoginForm();
+			
+			resolve({privateKey: result.privateKey});
+		});	
+		return promise;
+	}
+
+	function recovery() {
+		var promise = new Promise(async (resolve, reject) => {
+			var result = await handleAlternateLoginForm();	
+			resolve({success: result.successs});
+		});	
+		return promise;
+		
+	/*
+	- enter backup key
+	- enter password
+	* decrypt the stored key
+	* recreate the private key from the backup key and password
+	* split key in 3 encrypted parts
+	- show the QR code
+	O Run activation step
+	*/
+	}
+
+	function initialize() {
+		var handleMethod = (elem, select) => {
+			for(var i = 0; i < select.options.length; ++i) {
+				var option = select.options[i];
+				// if method already selected
+				if(option.value == elem.value
+					// or method is password and there is no password key stored
+					|| (option.value == 'password' && localStorage.getItem('passwordKey') === null)) 
+				{
+					option.style.display = "none";
+					if(select.value == option.value)
+						select.value = select.options[0].value;
+				}
+				else 
+					option.style.display = "block";
+			}
+			var methods = [getValue('alternatelogin-method1'), getValue('alternatelogin-method2')];
+			if(methods.includes('qrcode')) show('alternatelogin-qrcode-wrapper'); else hide('alternatelogin-qrcode-wrapper');
+			if(methods.includes('password')) show('alternatelogin-password-wrapper'); else hide('alternatelogin-password-wrapper');
+			if(methods.includes('passwordkey')) show('alternatelogin-passwordkey-wrapper'); else hide('alternatelogin-passwordkey-wrapper');
+			if(methods.includes('backupkey')) show('alternatelogin-backupkey-wrapper'); else hide('alternatelogin-backupkey-wrapper');
+		};
+		_('alternatelogin-method1').addEventListener('change', (e) => handleMethod(e.target, _('alternatelogin-method2')));
+		_('alternatelogin-method2').addEventListener('change', (e) => handleMethod(e.target, _('alternatelogin-method1')));
+		handleMethod(_('alternatelogin-method1'), _('alternatelogin-method2'));
+		handleMethod(_('alternatelogin-method2'), _('alternatelogin-method1'));
+	}
+
+	/* Startup */
+	function start() {
+		initialize();
+		
+		click('menu-login', async function(e) { 
+			hide('menu'); 
+			var result = await activation(); 
+			show('menu'); 
+		}, {});
+		click('menu-setup', async function(e) { 
+			hide('menu'); 
+			var result = await setup(); 
+			show('menu'); 
+		}, {});
+		click('menu-recovery', async function(e) { 
+			hide('menu'); 
+			var result = await recovery(); 
+			show('menu'); 
+		}, {});
+		
+		show('menu');
+	}
+
+	window.onload = start;
+
+	</script>
+</body>
