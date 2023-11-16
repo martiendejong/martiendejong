@@ -20,7 +20,7 @@ export class AppComponent extends BaseComponent implements OnInit, AfterViewInit
     private router: Router, 
     private titleService: Title, private metaService: Meta,
     private location: Location) {
-    super(translate); 
+    super(translate);
   }
 
   title = 'Martien de Jong';
@@ -40,7 +40,7 @@ export class AppComponent extends BaseComponent implements OnInit, AfterViewInit
           if(url == '') url = 'home';
           var scrollElem = document.getElementById(url);
           if(scrollElem != null) {
-            scrollElem.scrollIntoView();
+            scrollElem.scrollIntoView({ behavior: 'smooth' });
           }
         }
       }
@@ -48,37 +48,10 @@ export class AppComponent extends BaseComponent implements OnInit, AfterViewInit
   }
 
   ngOnInit(): void {
-
-    var me = this;
-
     Aos.init();
+  }
 
-    window.addEventListener('resize', () => { me.handleAddressBarOnMobileDevice() });   
-    if(me.hasSmallScreen() || me.isMobileBrowser()) {
-      var topMenu = document.querySelector('#top-menu') as HTMLElement;
-      topMenu.className += ' hidden';
-      var mobileMenu = document.querySelector('.mobile-menu') as HTMLElement;
-      mobileMenu.className += ' visible';
-      var languageMenu = document.querySelector('.language-selector') as HTMLElement;
-      languageMenu.className += ' mobile';
-    }
-  }
-  isMobileBrowser() {
-    return /Mobi|Android/i.test(navigator.userAgent);
-  } 
-  hasSmallScreen() {
-    return (window.devicePixelRatio || 1) > 1.45;
-  }
-  handleAddressBarOnMobileDevice() {
-    const elems = document.querySelectorAll('.content');
-    var me = this;
-    elems.forEach(function(elem: Element) {
-      var htmlElem = elem as HTMLElement;
-      if(window.innerHeight !== window.outerHeight && (me.hasSmallScreen() || me.isMobileBrowser())) {
-        htmlElem.style.height = `${window.innerHeight}px`;
-      } else {
-        htmlElem.style.height = '';
-      }
-    });
+  setAnchor(anchor: string) {
+    this.location.go(anchor);
   }
 }

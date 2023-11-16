@@ -37,8 +37,9 @@ a img {
 
 /* Media Query for Mobile */
 @media only screen
-  and (max-width: 1024px) /* max-width for phones and tablets */
-  and (max-height: 1024px) /* max-height for phones and tablets */
+  and (((max-width: 1024px) /* max-width for phones and tablets */
+    and (max-height: 1024px)) /* max-height for phones and tablets */
+  or (orientation: portrait))
   {
   /* Your styles for landscape orientation go here */
   button {
@@ -48,23 +49,23 @@ a img {
     border: 0 none;
     background-color: transparent;
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     background-repeat: no-repeat;
     z-index: 100;
     display: block;
   }
   nav {
-    display: none;
-  }
-  nav.mobile-menu-visible {
-    position: absolute;
+    /*display: none;*/
+    z-index: -10;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;    
+    position: fixed;
     left: 0;
     width: 100%;
     display: block;
-    overflow: scroll;
-    z-index: 90;
+    overflow: auto;
   }
-  nav.mobile-menu-visible a {
+  nav a {
     display: block;
     text-align: center;
     width: 100%;
@@ -73,7 +74,19 @@ a img {
     justify-content: center;
     font-family: 'Orbitron';
     text-decoration: none;
-    color: #888;
+    color: #FFC; /* Text color in mobile menu */
+    background: linear-gradient(to bottom, #555, #333); /* Gradient background */
+    filter: drop-shadow(0.25vh 0.5vh 0.5vh #000);
+    margin: 0;
+  }
+  nav.mobile-menu-visible {
+    z-index: 90;
+    background: linear-gradient(to bottom, #333, #111);
+    opacity: 1;
+  }
+  nav.mobile-menu-visible a:hover {
+    background: #555; /* Change background color on hover */
+    color: #FF4;
   }
 }
 
@@ -99,13 +112,18 @@ a img {
     height: 18%;
     font-size: 14vh;
   }
+  
+  a img {
+    height: 14vh;
+    width: 14vh;
+  }
 }
 
 /* Media Query for Portrait Orientation */
 @media only screen
-  and (max-width: 767px) /* max-width for phones and tablets */
+  /*and (max-width: 767px) /* max-width for phones and tablets */
   and (orientation: portrait)
-  and (max-height: 1024px) /* max-height for phones and tablets */
+  /*and (max-height: 1024px) /* max-height for phones and tablets */
   {
   /* Your styles for portrait orientation go here */
   button {
@@ -117,8 +135,8 @@ a img {
   }
   nav {
     top: 0;
-    padding-top: 9vh;
-    height: 90vh;
+    padding-top: 12vh;
+    height: 100%;
   }
   nav a {
     height: 12%;

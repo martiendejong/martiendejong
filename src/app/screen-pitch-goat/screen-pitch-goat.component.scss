@@ -1,0 +1,39 @@
+// /* layout */
+// .text {
+//     top: 25vh;
+//     left: 10vw;
+//     width: 40vw;
+//     height: 45vh;
+// }
+//  .image {
+//     top: 25vh;
+//     left: 62vw;
+//     width: 29vw;
+//     height: 51vh;
+// }
+// /* portrait */
+// @media (min-height: 130vw) {
+
+//     .text {
+//        top: 10vh;
+//        left: 15vw;
+//        width: 65vw;
+//        height: 30vh;
+//    }
+   
+//     .image {
+//        top: 53vh;
+//        left: 15vw;
+//        width: 71vw;
+//        height: 36vh;
+//    }  
+// }
+
+/* button colors */
+.text button, .text a {
+    background: linear-gradient(135deg, #0af, #39f);
+    box-shadow: 0 1vw 1.5vw rgba(96, 96, 255, 0.6);
+}
+ .text button:hover, .text a:hover {
+    background: linear-gradient(135deg, #3af, #69f);
+}

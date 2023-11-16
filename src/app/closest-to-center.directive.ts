@@ -6,7 +6,7 @@ import { Directive, ElementRef, EventEmitter, Output, OnInit, OnDestroy } from '
 export class ClosestToCenterDirective implements OnInit, OnDestroy {
   private observer: IntersectionObserver = new IntersectionObserver(entries => {});
 
-  @Output() closestToCenter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() closestToCenter: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private el: ElementRef) {}
 
@@ -19,7 +19,9 @@ export class ClosestToCenterDirective implements OnInit, OnDestroy {
 
     this.observer = new IntersectionObserver(entries => {
       const isClosestToCenter = entries.some(entry => entry.isIntersecting);
-      this.closestToCenter.emit(isClosestToCenter);
+      if(isClosestToCenter) {
+        this.closestToCenter.emit();
+      }
     }, options);
 
     this.observer.observe(this.el.nativeElement);

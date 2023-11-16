@@ -1,20 +1,25 @@
 <app-navigation [items]="[
     { title: 'Home', routerLink: '', image: '/assets/home.svg', imageHover: '/assets/home_hover.svg' },
-    { title: 'About', routerLink: '/about' },
-    { title: 'Contact', routerLink: '/contact' }
+    { title: 'Projecten', routerLink: '/projects' },
+    { title: 'Contact', routerLink: '/contact' },
+    { title: 'CV', href: 'https://martiendejong.nl/cv.pdf' },
+    { title: 'Taal', routerLink: '/language', image: '/assets/language.svg' }
     ]" />
-<div class="page">
+<div class="page" id="home" appClosestToCenter (closestToCenter)="setAnchor('')">
     <div class="parts-2 home">
         <div class="home-banner"></div>
     </div>
     <div class="parts-2 home">
-        <div class="home-buttoncontainer">
+        <div class="home-buttoncontainer" routerLink="contact">
             <div id="profile-image"></div>
             <button class="home-button">Nu Aanmelden</button>
         </div>
     </div>
 </div>
-<div class="page">
+<div class="page" id="projects" appClosestToCenter (closestToCenter)="setAnchor('projects')">
+    <app-screen-pitch-goat></app-screen-pitch-goat>
+</div>
+<div class="page" id="contact" appClosestToCenter (closestToCenter)="setAnchor('contact')">
     <div class="parts-2 parts-2-order-1">
         <div class="section">
             <h1>dasdas</h1>

@@ -16,7 +16,7 @@
 }
 
 .parts-2 {
-    overflow: hidden;
+    overflow: visible;
     flex-direction: column;
 
     justify-content: center;
@@ -30,6 +30,7 @@
     background-size: contain;
     background-repeat: no-repeat;
     filter: drop-shadow(0.25vh 0.5vh 0.5vh #000);
+    margin-top: 15%;
 }
 
 .home-button {
@@ -88,7 +89,7 @@ and (orientation: portrait)
     }
     .parts-2.home {
         height: 50vh;
-        width: 100vw;
+        width: 100%;
         display: flex;
     }
     #profile-image {
@@ -106,7 +107,7 @@ and (orientation: portrait)
         margin-top: 6.5vh;
     }
     .home-buttoncontainer {
-        margin-bottom: 6.5vh;
+        margin-bottom: 15.5vh;
     }
     .home-button {
         font-size: 8vw;
@@ -138,6 +139,8 @@ and (orientation: landscape)
         width: 100vh;
         max-height: 43.5vw;
         max-width: 50vw;
+        margin-top: 5%;
+
         //margin-top: 6.5vh;
     }
     .home-button {

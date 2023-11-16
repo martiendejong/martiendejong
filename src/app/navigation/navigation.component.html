@@ -4,13 +4,15 @@
 <nav [ngClass]="{'mobile-menu-visible': visible}">
     <ng-container *ngFor="let item of items">
         <a *ngIf="item.routerLink !== undefined" [routerLink]="item.routerLink" [attr.href]="item.href"
+          (click)="hide()"
           (mouseenter)="changeImage(item, item.imageHover)" 
           (mouseleave)="changeImage(item, item.image)">
           <ng-container *ngIf="item.image !== undefined; else textContent">
             <ng-container *ngTemplateOutlet="imageContent"></ng-container>
           </ng-container>
         </a>
-        <a *ngIf="item.routerLink === undefined" [attr.href]="item.href"
+        <a *ngIf="item.routerLink === undefined" [attr.href]="item.href" target="_blank"
+          (click)="hide()"
           (mouseenter)="changeImage(item, item.imageHover)" 
           (mouseleave)="changeImage(item, item.image)">
           <ng-container *ngIf="item.image !== undefined; else textContent">

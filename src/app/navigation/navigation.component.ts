@@ -14,4 +14,7 @@ export class NavigationComponent {
       item.currentImage = url;
     }
   }
+  public hide() {
+    this.visible = false;
+  }
 }

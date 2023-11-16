@@ -9,18 +9,33 @@ import { PageSectionComponent } from './page-section/page-section.component';
 import { ClosestToCenterDirective } from './closest-to-center.directive';
 import { BaseComponent } from './base/base.component';
 import { FittextDirective } from './fittext.directive';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/translations/', '.json');
+}
 
 @NgModule({
   declarations: [
-    FittextDirective,
+    BaseComponent,
     AppComponent,
     PageComponent,
     NavigationComponent,
     PageSectionComponent,
-    ClosestToCenterDirective,
-    BaseComponent
+    FittextDirective,
+    ClosestToCenterDirective    
   ],
   imports: [
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
+      }
+    }),
     BrowserModule,
     AppRoutingModule
   ],
