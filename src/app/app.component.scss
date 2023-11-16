@@ -1,0 +1,157 @@
+*:first-child {
+    margin-top: 0;
+}
+
+*:last-child {
+    margin-bottom: 0;
+}
+
+/* Page is fullscreen */
+.page {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+}
+
+.parts-2 {
+    overflow: hidden;
+    flex-direction: column;
+
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+}
+
+.home-banner {
+    background-image: url(/assets/home-banner.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0.25vh 0.5vh 0.5vh #000);
+}
+
+.home-button {
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #fc0;
+    background: linear-gradient(70deg, #f00, #d00);
+    border: 0 none;
+    transition: background 0.3s ease-in-out;
+    font-family: 'Orbitron';
+    margin-top: -5%;
+    filter: drop-shadow(0.25vh 0.5vh 0.5vh #000);
+}
+
+#profile-image {
+    background-image: url(/assets/profile.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0.25vh 0.5vh 0.5vh #000);
+    cursor: pointer;
+}
+
+.home-button {
+    cursor: pointer;
+}
+
+.home-banner p {
+    text-align: center;
+}
+
+.home-buttoncontainer {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+}
+
+.home-buttoncontainer {
+    transition: filter 0.5s ease, transform 0.3s ease;
+}
+
+.home-buttoncontainer:hover {
+    transform: scale(1.1);
+    filter: brightness(1.5);
+}
+
+@media only screen
+and (orientation: portrait)
+{
+    .page {
+        flex-direction: column;
+    }
+    .parts-2.home {
+        height: 50vh;
+        width: 100vw;
+        display: flex;
+    }
+    #profile-image {
+        height: 70vw;
+        width: 70vw;
+        max-height: 35vh;
+        max-width: 35vh;
+        border-radius: 35vw;    
+    }
+    .home-banner {
+        height: 87vw;
+        width: 100vw;
+        max-height: 43.5vh;
+        max-width: 50vh;
+        margin-top: 6.5vh;
+    }
+    .home-buttoncontainer {
+        margin-bottom: 6.5vh;
+    }
+    .home-button {
+        font-size: 8vw;
+        padding: 1vh 2vh;
+        border-radius: 2vh;
+    }    
+}
+
+@media only screen
+and (orientation: landscape)
+{
+    .page {
+        flex-direction: row;
+    }
+    .parts-2.home {
+        height: 100vh;
+        width: 50vw;
+        display: inline-flex;
+    }
+    #profile-image {
+        height: 60vh;
+        width: 60vh;
+        max-height: 40vw;
+        max-width: 40vw;
+        border-radius: 30vh;  
+    }
+    .home-banner {
+        height: 87vh;
+        width: 100vh;
+        max-height: 43.5vw;
+        max-width: 50vw;
+        //margin-top: 6.5vh;
+    }
+    .home-button {
+        font-size: 8vh;
+        padding: 1vw 2vw;
+        border-radius: 2vw;
+    }
+}
+
+@media only screen
+and (orientation: landscape)
+and (max-aspect-ratio: 10/6)
+{
+    .home-button {
+        font-size: 6vh;
+    }
+}
