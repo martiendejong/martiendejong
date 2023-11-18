@@ -12,6 +12,8 @@ import { FittextDirective } from './fittext.directive';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ScreenPitchGoatComponent } from './screen-pitch-goat/screen-pitch-goat.component';
+import { ContactFormComponent } from './contact-form/contact-form.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/translations/', '.json');
@@ -24,6 +26,8 @@ export function createTranslateLoader(http: HttpClient) {
     PageComponent,
     NavigationComponent,
     PageSectionComponent,
+    ScreenPitchGoatComponent,
+    ContactFormComponent,
     FittextDirective,
     ClosestToCenterDirective    
   ],

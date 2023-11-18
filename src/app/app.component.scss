@@ -158,3 +158,116 @@ and (max-aspect-ratio: 10/6)
         font-size: 6vh;
     }
 }
+
+
+
+
+
+
+
+
+/* Maasai Investments */
+.content {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(to bottom right, #6A0DAD 0%, #BE0A26 100%);
+}
+
+.content::before {
+    content: "";
+    position: relative;
+    display: block;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 3;
+}
+
+.content::before {
+    background: linear-gradient(to bottom, #000 0%, transparent 2%, transparent 98%, #000 100%);
+}
+
+.content:first-child::before {
+    background: linear-gradient(to bottom, transparent 0%, transparent 98%, #000 100%);
+}
+
+.content:last-child::before {
+    background: linear-gradient(to bottom, #000 0%, transparent 2%, transparent 100%);
+}
+
+.background-image {
+    object-fit: cover; 
+    opacity: 0.2; 
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    top: 0;    
+}
+
+
+
+/* contact page */
+.page#contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page#contact .centerform {
+    background: linear-gradient(to bottom, #eee, #ccc); /* Gradient background */
+    color: #444; /* Text color */
+    padding: 5vw;
+    border-radius: 5vw; /* Rounded corners */
+    filter: drop-shadow(0.25vh 0.5vh 0.5vh #000);
+    width: 70%;
+  }
+  
+  .page#contact .centerform .inner {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .page#contact .centerform .inner h1, 
+  .page#contact .centerform .inner p {
+    text-align: center;
+    font-size: 6vw;
+  }
+
+  .page#contact .section:first-of-type {
+    margin-bottom: 5vh; /* Spacing between sections */
+  }
+  
+  /* Landscape mode */
+  @media only screen and (orientation: landscape) {
+    .page#contact .centerform {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 60%;
+      padding: 5vh;
+      border-radius: 5vh;
+    }
+    
+    .page#contact .section:first-of-type {
+        margin-bottom: 0; /* Spacing between sections */
+        margin-right: 5vw; /* Spacing between sections */
+      }
+    
+    .page#contact .section {
+      width: 48%; /* Adjust width based on your preference */
+    }
+
+
+    .page#contact .centerform .inner h1, 
+    .page#contact .centerform .inner p {
+      text-align: center;
+      font-size: 4vh;
+    }
+
+    .page#contact .centerform .inner h1 {
+        font-size: 5vh;
+    }
+  }

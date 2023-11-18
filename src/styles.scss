@@ -18,3 +18,139 @@ body {
     background-image: url(assets/background.jpg);
     background-size: cover;
 }
+
+
+
+
+
+
+
+
+
+
+
+/* Maasai Investments */
+@font-face {
+    font-family: AmaticSCBold;
+    src: url(assets/fonts/AmaticSC-Bold.ttf) format("truetype");
+}
+@font-face {
+    font-family: PlayfairDisplay;
+    src: url(assets/fonts/PlayfairDisplay-VariableFont_wght.ttf) format("truetype");
+}
+/* landscape */
+.portrait {
+    display: none;
+}
+/* portrait */
+@media (min-height: 130vw) {
+
+    .portrait {
+        display: block;
+    }
+
+    .landscape {
+        display: none;
+    }
+}
+
+.hidden {
+    display: none;
+}
+.visible {
+    display: block;
+}
+
+/*
+    PAGE LAYOUTS
+*/
+
+/* layout */
+.layout1 .text {
+    top: 22vh;
+    left: 51vw;
+    width: 38vw;
+    height: 55vh;
+}
+.layout1 .text:nth-child(2) {
+    top: 22vh;
+    left: 5vw;
+    width: 35vw;
+    height: 55vh;
+}
+.layout1 .image {
+    top: 22vh;
+    left: 5vw;
+    width: 41vw;
+    height: 61vh;
+}
+/* portrait */
+@media (min-height: 130vw) {
+    .layout1 .text {
+        top: 44vh;
+        left: 8vw;
+        width: 79vw;
+        height: 38vh;
+    }
+    .layout1 .text:nth-child(2) {
+        top: 10vh;
+        left: 8vw;
+        width: 79vw;
+        height: 26vh;
+    }        
+    .layout1 .image {
+        top: 10vh;
+        left: 8vw;
+        width: 85vw;
+        height: 32vh;
+    }    
+}
+
+/* layout */
+.layout2 .text {
+    top: 22vh;
+    left: 5vw;
+    width: 38vw;
+    height: 55vh;
+}
+.layout2 .text:nth-child(2) {
+    top: 22vh;
+    left: 54vw;
+    width: 35vw;
+    height: 55vh;
+}
+.layout2 .image {
+    top: 22vh;
+    left: 54vw;
+    width: 41vw;
+    height: 61vh;
+}
+/* portrait */
+@media (min-height: 130vw) {
+    .layout2 .text {
+        top: 10vh;
+        left: 8vw;
+        width: 79vw;
+        height: 38vh;
+    }
+    .layout2 .text:nth-child(2) {
+        top: 56vh;
+        left: 8vw;
+        width: 79vw;
+        height: 26vh;
+    }       
+    .layout2 .image {
+        top: 56vh;
+        left: 8vw;
+        width: 85vw;
+        height: 32vh;
+    }    
+}
+
+/* Media query for devices with high pixel density and small screen width */
+// @media ((-webkit-min-device-pixel-ratio: 2) or (max-width: 768px)) and (min-width: 100vh) {
+//     .layout1 .text, .layout1 .image,
+//     .layout2 .text, .layout2 .image {
+//         top: 18vh !important;
+//     }
+// }

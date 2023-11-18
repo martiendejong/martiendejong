@@ -37,3 +37,37 @@
  .text button:hover, .text a:hover {
     background: linear-gradient(135deg, #3af, #69f);
 }
+
+p
+{
+    font-family: PlayFairDisplay;
+}
+
+
+
+h1 {
+    font-family: AmaticSCBold;
+    position: absolute;
+    top: 1.5vh;
+    left: 20vw;
+    width: 62vw;
+    z-index: 10;
+    text-align: center;
+    font-size: 5vh;
+    color: #ff6;
+    filter: drop-shadow(0vh 1vh 0.5vh #000);
+    pointer-events: none;
+}
+
+@media (max-height: 130vw) or (min-width: 768px) {
+    h1 {
+        width: 60vw;
+    }
+}
+
+@media (max-height: 130vw) {
+    h1 {
+        font-size: 8vh;
+        top: 0.5vh;
+    }
+}

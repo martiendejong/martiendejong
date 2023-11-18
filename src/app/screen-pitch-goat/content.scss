@@ -1,0 +1,268 @@
+/* layout */
+.gallery {
+    z-index: 5;
+    position: absolute;
+    filter: drop-shadow(0vh 1vh 0.5vh #000);
+    text-align: center;
+}
+.title {
+    z-index: 5;
+    position: absolute;
+    filter: drop-shadow(0vh 1vh 0.5vh #000);  
+}
+.gallery img {
+    border: 0.2vw solid #222;
+    border-radius: 5vw;
+    cursor: pointer;
+}
+.text {
+    text-align: center;
+    display: flex;
+    align-items: center;    
+}
+.text, .image {
+    z-index: 5;
+    position: absolute;
+    box-shadow: 0 2vw 3vw rgba(0, 0, 0, 0.4);
+    border: 0.2vw solid #222;
+    border-radius: 5vw;
+    background-color: #ddd;
+    padding: 3vh 3vw 3vh 3vw;
+    color: #444;
+}
+.image {
+    background-color: #8B4513;
+    padding: 0;
+    object-fit: cover;
+}
+
+/* Standard styles */
+.text h4 {
+    font-family: PlayfairDisplay;
+}
+mat-icon {    
+    height: auto;
+    width: auto;
+}
+.text button,
+.text a {
+    font-family: PlayfairDisplay;
+
+    cursor: pointer;
+    border-radius: 2vh;
+    margin: auto;
+    display: block;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    color: #ff6;
+    box-shadow: 0 1vw 1.5vw rgba(255, 96, 96, 0.6);
+    background: linear-gradient(135deg, #f00, #a90000);
+}
+.text a {
+    cursor: pointer;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonborder;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    text-decoration: none;
+    box-sizing: border-box;
+}
+.text button:hover,
+.text a:hover {
+    color: #ff0;
+    background: linear-gradient(135deg, #f22, #a92222);
+    transform: scale(1.1);    
+}
+.text button,
+.text a {
+    padding-top: 0.6vh;
+    padding-bottom: 0.6vh;
+}
+// .text button:hover,
+// .text a:hover {
+//     margin-top: 4.8vh;
+// }
+
+
+// .text button.action, .text a.action {
+//     background: linear-gradient(135deg, #f00, #a90000);
+//     box-shadow: 0 1vw 1.5vw rgba(255, 96, 96, 0.6);
+// }
+// .text button.action:hover, .text a.action:hover {
+//     background: linear-gradient(135deg, #f22, #a92222);
+// }
+// .text button.link, .text a.link {
+//     background: linear-gradient(135deg, #0af, #39f);
+//     box-shadow: 0 1vw 1.5vw rgba(96, 96, 255, 0.6);
+// }
+// .text button.link:hover, .text a.link:hover {
+//     background: linear-gradient(135deg, #3af, #69f);
+// }
+// .text button.info, .text a.info {
+//     background: linear-gradient(135deg, #0af, #39f);
+//     box-shadow: 0 1vw 1.5vw rgba(96, 96, 255, 0.6);
+// }
+// .text button.info:hover, .text a.info:hover {
+//     background: linear-gradient(135deg, #3af, #69f);
+// }
+// .text button.contact, .text a.contact {
+//     background: linear-gradient(135deg, #0af, #39f);
+//     box-shadow: 0 1vw 1.5vw rgba(96, 96, 255, 0.6);
+// }
+// .text button.contact:hover, .text a.contact:hover {
+//     background: linear-gradient(135deg, #3af, #69f);
+// }
+.text button,
+.text a {
+    background: linear-gradient(185deg, #444, #000);
+    box-shadow: 0 1vw 1.5vw rgba(0, 0, 0, 0.6);
+    border-color: #444; /* Gray-silver-black border */
+    transition: transform 0.3s ease-in-out, color 1s ease-in-out, background-color 1s ease-in-out, border-color 1s ease-in-out;
+}
+
+.text button:hover,
+.text a:hover {
+    transform: scale(1.05); /* Slight scale-up effect on hover */
+    background: linear-gradient(185deg, #333, #000); /* Adjusted gradient on hover */
+    border-color: #333; /* Adjusted border color on hover */
+}
+
+.text button.action,
+.text a.action {
+    background: linear-gradient(185deg, #ff4444, #ff0000, #550000);
+    box-shadow: 0 1vw 1.5vw rgba(170, 0, 0, 0.8);
+    border-color: #cc0000; /* Red border */
+}
+
+.text button.action:hover,
+.text a.action:hover {
+    background: linear-gradient(185deg, #f66, #f00, #700); /* Brighter red gradient on hover */
+    border-color: #f00; /* Brighter red border on hover */
+}
+
+.text button.info,
+.text a.info {
+    background: linear-gradient(185deg, #44aa22, #007700, #005500);
+    box-shadow: 0 1vw 1.5vw rgba(0, 136, 0, 0.8);
+    border-color: #006600; /* Green border */
+}
+
+.text button.info:hover,
+.text a.info:hover {
+    background: linear-gradient(185deg, #44dd22, #008800, #007700); /* Brighter green gradient on hover */
+    border-color: #008800; /* Brighter green border on hover */
+}
+
+.text button.link,
+.text a.link {
+    background: linear-gradient(185deg, #0066ff, #0000ff, #0000aa);
+    box-shadow: 0 1vw 1.5vw rgba(0, 0, 170, 0.8);
+    border-color: #0000cc; /* Blue border */
+}
+
+.text button.link:hover,
+.text a.link:hover {
+    background: linear-gradient(185deg, #0099ff, #0022ff, #00f); /* Brighter blue gradient on hover */
+    border-color: #00f; /* Brighter blue border on hover */
+}
+
+.text button.contact,
+.text a.contact {
+    background: linear-gradient(185deg, #ff00ff, #aa00ff, #550077);
+    box-shadow: 0 1vw 1.5vw rgba(136, 0, 170, 0.8);
+    border-color: #8800aa; /* Purple border */
+}
+
+.text button.contact:hover,
+.text a.contact:hover {
+    background: linear-gradient(185deg, #ff66ff, #aa00ff, #9900cc); /* Brighter purple gradient on hover */
+    border-color: #aa00ff; /* Brighter purple border on hover */
+}
+
+
+.text {
+    background-image: url('../../assets/text-bg.jpg');
+    background-size: cover;
+}
+
+
+
+
+.text-child a, .text-child button {
+    margin-bottom: 2%;
+}
+.text-child a:last-of-type, .text-child button:last-of-type {
+    margin-bottom: 0 !important;
+}
+
+
+
+
+.text a.stack {
+    margin-bottom: 2%;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+.text a.stack:last-of-type, .text button.stack:last-of-type {
+    margin-bottom: 0% !important;
+}
+
+@media (min-height: 130vw) {
+    .text a.stack, .text button.stack {
+        /*display: block;
+        width: 70%;*/
+        margin-top: 2%;
+        margin-bottom: 2%;
+    }
+    .text a.stack:first-of-type, .text button.stack:first-of-type {
+        margin-top: 0%;
+    }
+}
+
+
+
+
+input {
+    display: block;
+    margin: auto;
+    text-align: center;
+    width: 80%;
+}
+
+//@import 'texts.scss';
+
+.text p, .text h1, .text h2, .text h3, .text h4 {
+    margin-bottom: 2%;
+}
+
+.text-child * {
+    margin-bottom: 2%;
+}
+.text-child *:last-child {
+    margin-bottom: 0%;
+}
+
+
+.youtube-video-container {
+    overflow: hidden;
+}
+
+  .youtube-video-container::after {
+    display: block;
+    content: "";
+    padding-top: 56.25%;
+  }
+  
+  .youtube-video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }

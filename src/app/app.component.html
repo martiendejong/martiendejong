@@ -12,23 +12,39 @@
     <div class="parts-2 home">
         <div class="home-buttoncontainer" routerLink="contact">
             <div id="profile-image"></div>
-            <button class="home-button">Nu Aanmelden</button>
+            <button class="home-button">Kennismaken</button>
         </div>
     </div>
 </div>
-<div class="page" id="projects" appClosestToCenter (closestToCenter)="setAnchor('projects')">
+<div class="page content layout1" id="projects" appClosestToCenter (closestToCenter)="setAnchor('projects')">
+    <img src="assets/mainbackground2.jpg" class="background-image">
     <app-screen-pitch-goat></app-screen-pitch-goat>
 </div>
 <div class="page" id="contact" appClosestToCenter (closestToCenter)="setAnchor('contact')">
+    <div class="centerform">
+        <div class="section">
+            <div class="inner">
+                <h1>Neem contact op</h1>
+                <p>Uw vragen en behoeften zijn onze prioriteit, 
+                    en we streven ernaar om zo snel mogelijk persoonlijk contact met u op te nemen.</p>
+            </div>
+        </div>
+        <div class="section">
+            <app-contact-form />
+        </div>
+    </div>
+</div>
+<!-- <div class="page" id="contact" appClosestToCenter (closestToCenter)="setAnchor('contact')">
     <div class="parts-2 parts-2-order-1">
         <div class="section">
+
             <h1>dasdas</h1>
             <p>dsadsa</p>
         </div>
     </div>
     <div class="parts-2 parts-2-order-2">
         <div class="section">
-
+            <app-contact-form />
         </div>
     </div>
-</div>
+</div> -->

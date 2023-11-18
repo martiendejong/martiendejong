@@ -1,0 +1,36 @@
+<form id="contactForm" *ngIf="formResult.success == false && formResult.errorMessage == ''">
+    <div>
+        <label>Naam</label>
+        <input name="name" type="text" />
+    </div>
+    <div>
+        <label>Telefoonnummer</label>
+        <input name="phone" type="text" />
+    </div>
+    <div>
+        <label>Emailadres</label>
+        <input name="email" type="text" />
+    </div>
+    <div>
+        <label>Bericht</label>
+        <textarea name="message" rows="4"></textarea>
+    </div>
+    <div class="button">
+        <input type="hidden" name="security" value="Ver3tig!" />
+        <button type="button" class="contact" (click)="submitForm()">Versturen</button>
+    </div>
+</form>
+<div *ngIf="formResult.success == true">
+    <p>Uw verzoek is vezonden.</p>
+    <p>Ik neem zo snel mogelijk contact met u op.</p>
+    <button (click)="done()">Klaar</button>
+</div>
+<div *ngIf="formResult.errorMessage != ''">
+    <p>Sorry, er is iets mis gegaan bij het versturen van uw contactverzoek.</p>
+    <p>Ik werk eraan dit probleem zo snel mogelijk op te lossen.</p>
+    <p>Intussen kunt u mij benaderen op mailadres 
+        <a href="mailto:info@martiendejong.nl">info&#64;martiendejong.nl</a> 
+        of telefoonnummer <a href="tel:+31633984381">(+31) 06 3398 4381</a>.
+    </p>
+    <button (click)="done()">Verbergen</button>
+</div>
